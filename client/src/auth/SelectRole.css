@@ -1,0 +1,69 @@
+/* PAGE CENTER */
+.role-page {
+  min-height: 100vh; /* full viewport height */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e1e1e;
+}
+
+
+/* CARD */
+.role-card {
+  background: #111827;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.role-card h2 {
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+/* BUTTONS */
+.role-btn {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.role-btn.student {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.role-btn.company {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+}
+
+.role-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(37,99,235,0.4);
+}
+.page-center,
+.role-page {
+  min-height: 100vh;
+}

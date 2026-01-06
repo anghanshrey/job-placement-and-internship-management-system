@@ -1,64 +1,82 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
-import ForgotPassword from "./auth/ForgotPassword";
+import AdminLogin from "./admin/AdminLogin";
 import StudentDashboard from "./student/StudentDashboard";
 import CompanyDashboard from "./company/CompanyDashboard";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SelectRole from "./auth/SelectRole";
+import AdminDashboard from "./admin/AdminDashboard";
+import DashboardLayout from "./layouts/DashboardLayout";
 
-export default function App() {
+
+function Layout() {
+  const location = useLocation();
+
+  // 👇 AUTH PAGES (NO NAVBAR)
+  const hideNavbarRoutes = ["/", "/signup", "/admin/login", "/select-role"];
+
+  const hideNavbar = hideNavbarRoutes.includes(location.pathname);
+
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!hideNavbar && <Navbar />}
+
       <Routes>
         {/* Public */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/select-role" element={<SelectRole />} />
 
-        {/* Student Protected */}
-        <Route
-          path="/student"
-          element={
-            <ProtectedRoute role="student">
-              <StudentDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Company Protected */}
-        <Route
-          path="/company"
-          element={
-            <ProtectedRoute role="company">
-              <CompanyDashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/company/dashboard"
-          element={
-            <ProtectedRoute role="company">
-              <CompanyDashboard />
-            </ProtectedRoute>
-          }
-        />
+        {/* Student */}
         <Route
           path="/student/dashboard"
           element={
             <ProtectedRoute role="student">
-              <StudentDashboard />
+              <DashboardLayout>
+                <StudentDashboard />
+              </DashboardLayout>
             </ProtectedRoute>
           }
         />
 
 
+        {/* Company */}
+<Route
+  path="/company/dashboard"
+  element={
+    <ProtectedRoute role="company">
+      <DashboardLayout>
+        <CompanyDashboard />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
 
-        <Route path="/select-role" element={<SelectRole />} />
+
+        {/* Admin */}
+       <Route
+  path="/admin/dashboard"
+  element={
+    <ProtectedRoute role="admin">
+      <DashboardLayout>
+        <AdminDashboard />
+      </DashboardLayout>
+    </ProtectedRoute>
+  }
+/>
+
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Layout />
     </BrowserRouter>
   );
 }

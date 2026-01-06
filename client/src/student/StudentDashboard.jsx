@@ -29,7 +29,7 @@ export default function StudentDashboard() {
     setForm((prev) => ({
       ...prev,
       skills: prev.skills.includes(skill)
-        ? prev.skills.filter(s => s !== skill)
+        ? prev.skills.filter((s) => s !== skill)
         : [...prev.skills, skill]
     }));
   };
@@ -44,31 +44,52 @@ export default function StudentDashboard() {
   };
 
   return (
-    <div className="dashboard">
-      <h2>Student Profile</h2>
+    <div className="dashboard-page">
+      <div className="profile-card">
 
-      <input name="name" placeholder="Full Name" onChange={handleChange} />
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="college" placeholder="College Name" onChange={handleChange} />
-      <input name="degree" placeholder="Degree" onChange={handleChange} />
+        <h2>Student Profile</h2>
 
-      <h4>Select Skills</h4>
-      {skillsList.map(skill => (
-        <label key={skill}>
+        {/* BASIC INFO */}
+        <div className="form-grid">
+          <input name="name" placeholder="Full Name" onChange={handleChange} />
+          <input name="email" placeholder="Email" onChange={handleChange} />
+          <input name="college" placeholder="College Name" onChange={handleChange} />
+          <input name="degree" placeholder="Degree" onChange={handleChange} />
+        </div>
+
+        {/* SKILLS */}
+        <h3>Select Skills</h3>
+        <div className="skills-grid">
+          {skillsList.map((skill) => (
+            <label key={skill}>
+              <input
+                type="checkbox"
+                checked={form.skills.includes(skill)}
+                onChange={() => toggleSkill(skill)}
+              />
+              {skill}
+            </label>
+          ))}
+        </div>
+
+        {/* LINKS */}
+        <div className="form-grid">
           <input
-            type="checkbox"
-            onChange={() => toggleSkill(skill)}
+            name="github"
+            placeholder="GitHub Profile Link"
+            onChange={handleChange}
           />
-          {skill}
-        </label>
-      ))}
+          <input
+            name="linkedin"
+            placeholder="LinkedIn Profile Link"
+            onChange={handleChange}
+          />
+        </div>
 
-      <input name="github" placeholder="GitHub Profile Link" onChange={handleChange} />
-      <input name="linkedin" placeholder="LinkedIn Profile Link" onChange={handleChange} />
+        <button className="save-btn" onClick={submitProfile}>
+          Save Profile
+        </button>
 
-      <button onClick={submitProfile}>Save Profile</button>
-      <div style={{ color: "white", marginTop: "120px" }}>
-        <h1>STUDENT DASHBOARD LOADED</h1>
       </div>
     </div>
   );

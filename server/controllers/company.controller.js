@@ -1,16 +1,22 @@
 const Company = require("../models/Company");
 
-exports.createCompany = async (req, res) => {
-  const company = await Company.create({
-    userId: req.user.id,
-    ...req.body
-  });
+exports.saveOrUpdateCompany = async (req, res) => {
+  const { companyName, requiredSkills } = req.body;
+
+  const company = await Company.findOneAndUpdate(
+    { userId: req.user.id },
+    {
+      companyName,
+      requiredSkills,
+      email: req.user.email
+    },
+    { new: true, upsert: true }
+  );
+
   res.json(company);
 };
-exports.getCompanies = async (req, res) => {
-  const companies = await Company.find().populate(
-    "userId",
-    "name email"
-  );
-  res.json(companies);
+
+exports.getMyCompanyProfile = async (req, res) => {
+  const company = await Company.findOne({ userId: req.user.id });
+  res.json(company);
 };

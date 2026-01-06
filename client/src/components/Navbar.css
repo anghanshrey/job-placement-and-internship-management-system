@@ -25,3 +25,83 @@
   padding: 6px 12px;
   cursor: pointer;
 }
+
+.auth-box {
+  width: 320px;
+  margin: 60px auto;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+  border-radius: 10px;
+}
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+.page-center {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e1e1e;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;   /* 🔑 prevents stretching */
+  background: #121212;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  background: #0d6efd;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.social-icons button {
+  width: 50px;
+  height: 50px;
+  background: #1e1e1e;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.social-icons img {
+  width: 26px;   /* 🔑 FIXED SIZE */
+  height: 26px;
+}
+
+.page-center,
+.role-page {
+  min-height: 100vh;
+}
+
+

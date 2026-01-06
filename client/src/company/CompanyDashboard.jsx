@@ -17,7 +17,7 @@ export default function CompanyDashboard() {
   const toggleSkill = (skill) => {
     setSkills((prev) =>
       prev.includes(skill)
-        ? prev.filter(s => s !== skill)
+        ? prev.filter((s) => s !== skill)
         : [...prev, skill]
     );
   };
@@ -31,45 +31,87 @@ export default function CompanyDashboard() {
     const res = await API.get(
       `/students?skills=${skills.join(",")}`
     );
-
     setStudents(res.data);
   };
 
+  const saveCompanyProfile = async () => {
+    await API.post("/company/profile", {
+      companyName: "Facebook Pvt Ltd",
+      requiredSkills: skills
+    });
+    alert("Company profile saved");
+  };
+
   return (
-    <div className="dashboard">
-      <h2>Company Dashboard</h2>
+    <div className="company-page">
+      <div className="company-card">
 
-      <h3>Select Skills</h3>
+        <h2>Company Dashboard</h2>
 
-      {skillOptions.map(skill => (
-        <label key={skill}>
-          <input
-            type="checkbox"
-            onChange={() => toggleSkill(skill)}
-          />
-          {skill}
-        </label>
-      ))}
-
-      <button onClick={searchStudents}>Search</button>
-
-      <hr />
-
-      <h3>Student Details</h3>
-
-      {students.length === 0 && <p>No students found</p>}
-
-      {students.map(st => (
-        <div key={st._id} className="card">
-          <h4>{st.name}</h4>
-          <p>Email: {st.email}</p>
-          <p>College: {st.college}</p>
-          <p>Degree: {st.degree}</p>
-          <p>Skills: {st.skills.join(", ")}</p>
-          <a href={st.github} target="_blank">GitHub</a> |{" "}
-          <a href={st.linkedin} target="_blank">LinkedIn</a>
+        {/* SKILLS */}
+        <h3>Select Required Skills</h3>
+        <div className="skills-grid">
+          {skillOptions.map((skill) => (
+            <label key={skill}>
+              <input
+                type="checkbox"
+                checked={skills.includes(skill)}
+                onChange={() => toggleSkill(skill)}
+              />
+              {skill}
+            </label>
+          ))}
         </div>
-      ))}
+
+        <button className="search-btn" onClick={searchStudents}>
+          Search Students
+        </button>
+
+        <hr />
+
+        {/* STUDENTS */}
+        <h3>Student Details</h3>
+
+        {students.length === 0 ? (
+  <p className="empty-text">No students found</p>
+) : (
+  <div className="table-wrapper">
+    <table className="students-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>College</th>
+          <th>Degree</th>
+          <th>Skills</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+      <tbody>
+        {students.map((st) => (
+          <tr key={st._id}>
+            <td>{st.name}</td>
+            <td>{st.email}</td>
+            <td>{st.college}</td>
+            <td>{st.degree}</td>
+            <td>{st.skills.join(", ")}</td>
+            <td>
+              <a href={st.github} target="_blank">GitHub</a> |{" "}
+              <a href={st.linkedin} target="_blank">LinkedIn</a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
+
+        <button className="save-btn" onClick={saveCompanyProfile}>
+          Save Company Profile
+        </button>
+
+      </div>
     </div>
   );
 }

@@ -1,9 +1,17 @@
 const mongoose = require("mongoose");
 
 const companySchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
-  companyName: String,
-  requirements: [String]
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  companyName: {
+    type: String,
+    required: true
+  },
+  email: String,
+  requiredSkills: [String]
 });
 
 module.exports = mongoose.model("Company", companySchema);

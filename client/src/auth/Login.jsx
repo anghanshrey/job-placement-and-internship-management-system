@@ -4,73 +4,101 @@ import API from "../api/api";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider, facebookProvider } from "../firebase";
 import "./Auth.css";
+import AuthLayout from "../layouts/AuthLayout";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Email/Password Login
+  // =========================
+  // 1️⃣ EMAIL / PASSWORD LOGIN
+  // =========================
   const login = async () => {
-    const res = await API.post("/auth/login", { email, password });
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("role", res.data.role);
+    try {
+      const res = await API.post("/auth/login", { email, password });
 
-    window.location.href =
-      res.data.role === "student"
-        ? "/student/dashboard"
-        : res.data.role === "company"
-        ? "/company/dashboard"
-        : "/admin/dashboard";
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
+
+      if (res.data.role === "student") {
+        window.location.href = "/student/dashboard";
+      } else if (res.data.role === "company") {
+        window.location.href = "/company/dashboard";
+      } else if (res.data.role === "admin") {
+        window.location.href = "/admin/dashboard";
+      }
+    } catch (err) {
+      alert("Invalid email or password");
+    }
   };
 
-  // Google / Facebook Login
+  // =========================
+  // 2️⃣ SOCIAL LOGIN (STEP 2)
+  // =========================
   const socialAuth = async (provider) => {
-    const result = await signInWithPopup(auth, provider);
+    try {
+      const result = await signInWithPopup(auth, provider);
 
-    localStorage.setItem(
-      "socialUser",
-      JSON.stringify({
-        name: result.user.displayName,
-        email: result.user.email
-      })
-    );
+      // store social user TEMPORARILY
+      localStorage.setItem(
+        "socialUser",
+        JSON.stringify({
+          name: result.user.displayName,
+          email: result.user.email
+        })
+      );
 
-    window.location.href = "/select-role";
+      // STEP 2 → role selection page
+      window.location.href = "/select-role";
+    } catch (error) {
+      alert("Social login failed");
+    }
   };
 
   return (
-    <div className="auth-box">
-      <h2>Login</h2>
+    <AuthLayout>
+      <div className="auth-box">
+        <h2>Login</h2>
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      {/* ONLY ONE LOGIN BUTTON */}
-      <button onClick={login}>Login</button>
+        <button onClick={login}>Login</button>
 
-      <p className="auth-link">
-        Don’t have an account? <Link to="/signup">Signup</Link>
-      </p>
+        <p className="auth-link">
+          Don’t have an account? <Link to="/signup">Signup</Link>
+        </p>
 
-      <hr />
+        <hr />
 
-      <button onClick={() => socialAuth(googleProvider)}>
-        Login with Google
-      </button>
+        <p className="auth-link">
+          Admin? <Link to="/admin/login">Login here</Link>
+        </p>
 
-      <button onClick={() => socialAuth(facebookProvider)}>
-        Login with Facebook
-      </button>
-    </div>
+        <hr />
+
+        {/* SOCIAL ICON BUTTONS */}
+        <div className="social-icons">
+          <button onClick={() => socialAuth(googleProvider)}>
+            <img src="/google.png" alt="Google" />
+          </button>
+
+          <button onClick={() => socialAuth(facebookProvider)}>
+            <img src="/facebook.png" alt="Facebook" />
+          </button>
+        </div>
+      </div>
+    </AuthLayout>
   );
 }

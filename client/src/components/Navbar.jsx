@@ -9,18 +9,22 @@ export default function Navbar() {
     window.location.href = "/";
   };
 
+  {!localStorage.getItem("token") && (
+  <a href="/admin/login">Admin Login</a>
+)}
+
+
   return (
-    <div className="navbar">
+    <center><div className="navbar">
       <h3>Job Placement System</h3>
 
       <div>
         {role === "student" && <Link to="/student/dashboard">Dashboard</Link>}
         {role === "company" && <Link to="/company/dashboard">Dashboard</Link>}
         {role === "admin" && <Link to="/admin/dashboard">Admin</Link>}
-        {!role && <Link to="/">Login</Link>}
-        {!role && <Link to="/signup">Signup</Link>}
         {role && <button onClick={logout}>Logout</button>}
       </div>
     </div>
+    </center>
   );
 }

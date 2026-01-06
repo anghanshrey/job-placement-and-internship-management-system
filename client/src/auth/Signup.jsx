@@ -17,18 +17,35 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-card">
-      <h2>Signup</h2>
-      <input placeholder="Name" onChange={e => setForm({...form, name:e.target.value})}/>
-      <input placeholder="Email" onChange={e => setForm({...form, email:e.target.value})}/>
-      <input type="password" placeholder="Password" onChange={e => setForm({...form, password:e.target.value})}/>
+    <div className="page-center">
+      <div className="auth-box">
+        <h2>Create Account</h2>
 
-      <select onChange={e => setForm({...form, role:e.target.value})}>
-        <option value="student">Student</option>
-        <option value="company">Company</option>
-      </select>
+        <input
+          placeholder="Full Name"
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
 
-      <button onClick={signup}>Signup</button>
+        <input
+          placeholder="Email"
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+
+        <select
+          onChange={(e) => setForm({ ...form, role: e.target.value })}
+        >
+          <option value="student">Student</option>
+          <option value="company">Company</option>
+        </select>
+
+        <button onClick={signup}>Signup</button>
+      </div>
     </div>
   );
 }

@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.page-center,
+.role-page {
+  /* prefer full viewport height for auth/role pages; specific layouts may still override */
+  min-height: 100vh;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
