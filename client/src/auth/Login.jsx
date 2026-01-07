@@ -7,31 +7,37 @@ import "./Auth.css";
 import AuthLayout from "../layouts/AuthLayout";
 
 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // =========================
   // 1️⃣ EMAIL / PASSWORD LOGIN
   // =========================
-  const login = async () => {
-    try {
-      const res = await API.post("/auth/login", { email, password });
+const login = async () => {
+  try {
+    setLoading(true);
+    const res = await API.post("/auth/login", { email, password });
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("role", res.data.role);
 
-      if (res.data.role === "student") {
-        window.location.href = "/student/dashboard";
-      } else if (res.data.role === "company") {
-        window.location.href = "/company/dashboard";
-      } else if (res.data.role === "admin") {
-        window.location.href = "/admin/dashboard";
-      }
-    } catch (err) {
-      alert("Invalid email or password");
+    if (res.data.role === "student") {
+      window.location.href = "/student/dashboard";
+    } else if (res.data.role === "company") {
+      window.location.href = "/company/dashboard";
+    } else {
+      window.location.href = "/admin/dashboard";
     }
-  };
+  } catch (err) {
+    alert("Invalid login credentials");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // =========================
   // 2️⃣ SOCIAL LOGIN (STEP 2)
@@ -74,7 +80,10 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={login}>Login</button>
+        <button onClick={login} disabled={loading}>
+  {loading ? "Logging in..." : "Login"}
+</button>
+
 
         <p className="auth-link">
           Don’t have an account? <Link to="/signup">Signup</Link>
