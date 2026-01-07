@@ -1,6 +1,6 @@
 import { useState } from "react";
 import API from "../api/api";
-import "./auth.css";
+import "./Auth.css";
 
 export default function Signup() {
   const [form, setForm] = useState({
