@@ -20,6 +20,7 @@ app.use("/api/admin", require("./routes/admin.routes"));
 
 
 
+
 app.get("/", (req, res) => {
   res.send("Job Placement API Running");
 });
