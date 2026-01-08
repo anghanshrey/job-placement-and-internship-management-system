@@ -187,3 +187,14 @@ hr {
 .role-page {
   min-height: 100vh;
 }
+
+.card, .box, .panel {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover, 
+.box:hover,
+.panel:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}

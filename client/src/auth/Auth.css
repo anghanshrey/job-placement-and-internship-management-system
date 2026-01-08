@@ -272,3 +272,71 @@ hr {
     0 0 12px rgba(0,242,255,0.7),
     0 0 25px rgba(13,110,253,0.6);
 }
+
+/* =========================
+   PREMIUM CARD ANIMATION
+========================= */
+
+.auth-box {
+  animation: fadeSlideUp 0.8s ease forwards;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+@keyframes fadeSlideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Button Hover Glow */
+.auth-box button {
+  transition: all 0.3s ease;
+}
+
+.auth-box button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(13,110,253,0.4);
+}
+
+/* Input Focus Glow */
+.auth-box input:focus {
+  border-color: #4ea1ff;
+  box-shadow: 0 0 10px rgba(78,161,255,0.5);
+}
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 768px) {
+  .auth-box {
+    width: 92%;
+    padding: 22px;
+  }
+
+  .auth-box h2, 
+  .auth-box h3 {
+    font-size: 22px;
+  }
+
+  .auth-box input {
+    font-size: 15px;
+  }
+
+  .auth-box button {
+    font-size: 15px;
+    padding: 11px;
+  }
+
+  .social-icons button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .social-icons img {
+    width: 22px;
+    height: 22px;
+  }
+}
+

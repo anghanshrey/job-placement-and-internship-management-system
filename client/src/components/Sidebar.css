@@ -31,3 +31,44 @@
   background: #2563eb;
   color: white;
 }
+/* Sidebar slide animation */
+.sidebar {
+  transition: transform 0.4s ease;
+}
+
+/* Mobile sidebar hidden */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+/* Sidebar slide animation */
+.sidebar {
+  transition: transform 0.4s ease;
+}
+
+/* Mobile sidebar hidden */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+

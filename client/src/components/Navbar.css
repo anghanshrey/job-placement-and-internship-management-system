@@ -105,3 +105,12 @@ input, select, button {
 }
 
 
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 14px;
+  }
+
+  .navbar h1 {
+    font-size: 18px;
+  }
+}
